@@ -23,6 +23,7 @@
         public Payslip CalculatePayslip(EmployeeInfo employeeInfo)
         {
             this.CheckSuperRate(employeeInfo);
+            this.CheckAnnualSalary(employeeInfo);
 
             Payslip payslip = new Payslip();
 
@@ -36,9 +37,17 @@
             return payslip;
         }
 
+        private void CheckAnnualSalary(EmployeeInfo employeeInfo)
+        {
+            if (employeeInfo.AnnualSalary < 0)
+            {
+                throw new OverflowException();
+            }
+        }
+
         private void CheckSuperRate(EmployeeInfo employeeInfo)
         {
-            if (employeeInfo.SuperRate > 1M)
+            if (employeeInfo.SuperRate > 0.5M || employeeInfo.SuperRate < 0M)
             {
                 throw new OverflowException();
             }

@@ -173,7 +173,9 @@
         }
 
         [Test]
-        public void CalculatePayslip_ShouldThrowOverflowException_WhenAnnualSalaryIsIntMaxAndSuperRateIsGreaterThan1()
+        [TestCase(-0.1)]
+        [TestCase(0.51)]
+        public void CalculatePayslip_ShouldThrowOverflowException_WhenAnnualSalaryIsIntMaxAndSuperRateIsGreaterThan50OrLessThan0(decimal superRate)
         {
             // Arrange
             EmployeeInfo employeeInfo = new EmployeeInfo
@@ -181,7 +183,56 @@
                 FirstName = "David",
                 LastName = "Rudd",
                 AnnualSalary = int.MaxValue,
-                SuperRate = 1.1M,
+                SuperRate = superRate,
+                PaymentStartDate = "01 March – 31 March",
+            };
+
+            // Act
+            Action action = () =>
+            {
+                this.employeeIncomeService.CalculatePayslip(employeeInfo);
+            };
+
+            // Assert
+            action.ShouldThrow<OverflowException>();
+        }
+
+        [Test]
+        [TestCase(0.1)]
+        [TestCase(0.36)]
+        [TestCase(0.49)]
+        public void CalculatePayslip_ShouldNOTThrowOverflowException_WhenAnnualSalaryIsIntMaxAndSuperRateIsGreaterThan50OrLessThan0(decimal superRate)
+        {
+            // Arrange
+            EmployeeInfo employeeInfo = new EmployeeInfo
+            {
+                FirstName = "David",
+                LastName = "Rudd",
+                AnnualSalary = int.MaxValue,
+                SuperRate = superRate,
+                PaymentStartDate = "01 March – 31 March",
+            };
+
+            // Act
+            Action action = () =>
+            {
+                this.employeeIncomeService.CalculatePayslip(employeeInfo);
+            };
+
+            // Assert
+            action.ShouldNotThrow<OverflowException>();
+        }
+
+        [Test]
+        public void CalculatePayslip_ShouldThrowOverflowException_WhenAnnualSalaryIsNegative()
+        {
+            // Arrange
+            EmployeeInfo employeeInfo = new EmployeeInfo
+            {
+                FirstName = "David",
+                LastName = "Rudd",
+                AnnualSalary = -1,
+                SuperRate = 0,
                 PaymentStartDate = "01 March – 31 March",
             };
 
