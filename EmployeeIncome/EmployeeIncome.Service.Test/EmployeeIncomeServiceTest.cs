@@ -53,7 +53,7 @@
         }
 
         [Test]
-        public void CalculatePayslip_ShouldReturnPayslip_WhenAnnualSalaryIs0()
+        public void CalculatePayslip_ShouldReturnPayslip_WhenAnnualSalaryIs0_SuperRateIs0()
         {
             // Arrange
             EmployeeInfo employeeInfo = new EmployeeInfo
@@ -61,7 +61,7 @@
                 FirstName = "David",
                 LastName = "Rudd",
                 AnnualSalary = 0,
-                SuperRate = 0.09M,
+                SuperRate = 0M,
                 PaymentStartDate = "01 March – 31 March",
             };
 
@@ -83,15 +83,15 @@
         }
 
         [Test]
-        public void CalculatePayslip_ShouldReturnPayslip_WhenAnnualSalaryIsIntMax()
+        public void CalculatePayslip_ShouldReturnPayslip_WhenAnnualSalaryIs0AndSuperRateIs50()
         {
             // Arrange
             EmployeeInfo employeeInfo = new EmployeeInfo
             {
                 FirstName = "David",
                 LastName = "Rudd",
-                AnnualSalary = int.MaxValue,
-                SuperRate = 0.09M,
+                AnnualSalary = 0,
+                SuperRate = 0.50M,
                 PaymentStartDate = "01 March – 31 March",
             };
 
@@ -103,17 +103,17 @@
             {
                 Name = "David Rudd",
                 PayPeriod = "01 March – 31 March",
-                GrossIncome = 178956970,
-                IncomeTax = 80528432,
-                NetIncome = 98428538,
-                Super = 16106127
+                GrossIncome = 0,
+                IncomeTax = 0,
+                NetIncome = 0,
+                Super = 0
             };
 
             actual.ShouldBeEquivalentTo(expected);
         }
 
         [Test]
-        public void CalculatePayslip_ShouldReturnPayslip_WhenAnnualSalaryIsIntMaxAndSuperRateIs1()
+        public void CalculatePayslip_ShouldReturnPayslip_WhenAnnualSalaryIsIntMaxAndSuperRateIs50()
         {
             // Arrange
             EmployeeInfo employeeInfo = new EmployeeInfo
@@ -121,7 +121,7 @@
                 FirstName = "David",
                 LastName = "Rudd",
                 AnnualSalary = int.MaxValue,
-                SuperRate = 1M,
+                SuperRate = 0.5M,
                 PaymentStartDate = "01 March – 31 March",
             };
 
@@ -136,7 +136,37 @@
                 GrossIncome = 178956970,
                 IncomeTax = 80528432,
                 NetIncome = 98428538,
-                Super = 178956970
+                Super = 89478485
+            };
+
+            actual.ShouldBeEquivalentTo(expected);
+        }
+
+        [Test]
+        public void CalculatePayslip_ShouldReturnPayslip_WhenAnnualSalaryIsIntMaxAndSuperRateIs0()
+        {
+            // Arrange
+            EmployeeInfo employeeInfo = new EmployeeInfo
+            {
+                FirstName = "David",
+                LastName = "Rudd",
+                AnnualSalary = int.MaxValue,
+                SuperRate = 0M,
+                PaymentStartDate = "01 March – 31 March",
+            };
+
+            // Act
+            Payslip actual = this.employeeIncomeService.CalculatePayslip(employeeInfo);
+
+            // Assert
+            Payslip expected = new Payslip
+            {
+                Name = "David Rudd",
+                PayPeriod = "01 March – 31 March",
+                GrossIncome = 178956970,
+                IncomeTax = 80528432,
+                NetIncome = 98428538,
+                Super = 0
             };
 
             actual.ShouldBeEquivalentTo(expected);
