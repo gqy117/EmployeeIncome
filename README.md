@@ -1,20 +1,20 @@
 1. About Visual Studio
 
-This solution is built via VS2013 Update 5, I am not sure if you want to run/debug all the test cases. Personally, I use [Resharper], so that I can run the test cases easily. If you don't have [Resharper] and you still want to run the test cases, maybe you need to install some plugin for NUnit.
+This solution is built via **VS2013** Update 5, I am not sure if you want to run/debug all the test cases. Personally, I use [**Resharper**], so that I can run the test cases easily. If you don't have [Resharper] and you still want to run the test cases, maybe you need to install some plugin for **NUnit**.
 
 2. Solution Architecture
 
-This is a c# console application. For demo propose, I didn't build a web application.
+This is a **c# console** application. For demo propose, I didn't build a web application.
 
 It contains the following folders/projects:
 
-(1) Demo
+(1) **Demo**
 
-This folder is for demo. Run "EmployeeIncome.exe" to see the result if you don't install Visual Studio.
+This folder is for demo. Run "**EMPLOYEEINCOME.EXE**" to see the result if you don't install Visual Studio.
 
 (2) EmployeeIncome
 
-The console application project, I added [CsvHelper] library, since I want to use CSV as input and output format, but it's not necessary. That's why I didn't add test cases for this project, because the bussiness logic should not be here.
+The console application project, I added [**CsvHelper**] library, since I want to use **CSV** as input and output format, but it's not necessary. That's why I didn't add test cases for this project, because the bussiness logic should not be here.
 
 (3) EmployeeIncome.Service
 
